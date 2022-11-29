@@ -1,0 +1,121 @@
+#include <iostream>
+using namespace std;
+
+// bool findele(int arr[][3], int target) {
+//   for (int row = 0; row < 3; row++) {
+//     for (int col = 0; col < 3; col++) {
+//       if (arr[row][col]==target) {
+//         return 1;
+//         break;
+//       }
+//     }
+//   }
+//   return 0;
+// }
+
+//for finding maximum row 
+void maxSumRow(int arr[][3]) {
+  int maxi = -1;
+  int rowindex = -1;
+  for (int row = 0; row < 3; row++) {
+    int sum = 0;
+    for (int col = 0; col < 3; col++) {
+      sum += arr[row][col];
+    }
+    if (sum > maxi) {
+      maxi = sum;
+      rowindex = row;
+    }
+  }
+  cout << "Maximum row sum is"
+       << " " << maxi << " "
+       << "At index"<<" " << rowindex << endl;
+  cout<<endl;
+}
+
+void printSumRow(int arr[][3]) {
+  cout << endl;
+  for (int row = 0; row < 3; row++) {
+    int sum = 0;
+    for (int col = 0; col < 3; col++) {
+      cout << arr[row][col] << " ";
+      sum += arr[row][col];
+    }
+    cout << "="
+         << " " << sum << " "
+         << "row";
+    cout << endl;
+  }
+}
+//for finding max colomn
+void maxSumCol(int arr[][3]) {
+  int maxi = -1;
+  int colindex = -1;
+  for (int col = 0; col < 3; col++) {
+    int sum = 0;
+    for (int row = 0; row < 3; row++) {
+      sum += arr[row][col];
+    }
+    if (sum > maxi) {
+      maxi = sum;
+      colindex = col;
+    }
+  }
+  cout << "Maximum Col sum is"
+       << " " << maxi << " "
+       << "At index"<<" " << colindex << endl;
+  cout<<endl;
+}
+//printing col sum
+void printSumCol(int arr[][3]) {
+  cout << endl;
+  for (int col = 0; col < 3; col++) {
+    int sum = 0;
+    for (int row = 0; row < 3; row++) {
+      sum += arr[row][col];
+    }
+    cout<<"|";
+    cout << sum << " ";
+  }
+  cout<<endl;
+  cout<<endl;
+}
+int main() {
+  // int arr[3][3]={{1,11,111},{2,22,222},{3,33,333}};
+
+  int arr[3][3];
+
+  // taking input
+  cout << endl;
+  cout << "Enter the elements " << endl;
+  cout << endl;
+  // taking input -> row wise input
+  for (int row = 0; row < 3; row++) {
+    for (int col = 0; col < 3; col++) {
+      cin >> arr[row][col];
+    }
+  }
+  cout << endl;
+  cout << "printing elements with sum row & col wise " << endl;
+  // taking input -> row wise input
+  // for (int row = 0; row < 3; row++) {
+  //   for (int col = 0; col < 3; col++) {
+  //     cout << arr[row][col] << " ";
+  //   }
+  //   cout << endl;
+  // }cout<<endl;
+  //   int target;
+  // cout<<"Enter element"<<endl;
+  //   cin>>target;
+  //   if(findele(arr,target))
+  //   {
+  //     cout<<"Element found";
+  //   }
+  //   else{
+  //     cout<<"element not found";
+  //   }
+  printSumRow(arr);
+  printSumCol(arr);
+  maxSumRow(arr);
+  maxSumCol(arr);
+}
