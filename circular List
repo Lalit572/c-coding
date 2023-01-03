@@ -1,0 +1,97 @@
+#include <iostream>
+using namespace std;
+class Node {
+public:
+  int data;
+  Node *next;
+  Node(int d) {
+    this->data = d;
+    this->next = NULL;
+  }
+  ~Node() {
+    int value = data;
+    while (next != NULL) {
+      delete next;
+      next = NULL;
+    }
+    cout << "Memory is free for element " << value << endl;
+  }
+};
+// insertion
+void insertNode(Node *&tail, int element, int d) {
+
+  // empty list
+  if (tail == NULL) {
+    Node *newNode = new Node(d);
+    tail = newNode;
+    newNode->next = newNode;
+  } else {
+    // non-empty list
+    // assuming that the element is present in the list
+
+    Node *curr = tail;
+
+    while (curr->data != element) {
+      curr = curr->next;
+    }
+    // element found -> curr is representing element wala node
+    Node *temp = new Node(d);
+    temp->next = curr->next;
+    curr->next = temp;
+  }
+}
+// node deletion
+void deleteNode(Node *&tail, int value) {
+  if (tail == NULL) {
+    cout << "List is empty cannot delete" << endl;
+    return;
+  } else {
+    Node *prev = tail;
+    Node *curr = prev->next;
+    while (curr->data != value) {
+      prev = curr;
+      curr = curr->next;
+    }
+    prev->next = curr->next;
+    if (tail == curr) {
+      tail = prev;
+    }
+    if (curr == prev) {
+      tail = NULL;
+    }
+    curr->next = NULL;
+    delete curr;
+  }
+}
+// travarsal
+void print(Node *tail) {
+
+  Node *temp = tail;
+
+  // empty list
+  if (tail == NULL) {
+    cout << "List is Empty " << endl;
+    return;
+  }
+
+  do {
+    cout << tail->data << " ";
+    tail = tail->next;
+  } while (tail != temp);
+
+  cout << endl;
+}
+int main() {
+  Node *tail = NULL;
+  print(tail);
+  insertNode(tail, 5, 3);
+  print(tail);
+  // insertNode(tail, 3, 2);
+  // print(tail);
+  // insertNode(tail, 2, 4);
+  // print(tail);
+  // insertNode(tail, 3, 7);
+  // print(tail);
+  deleteNode(tail, 3);
+  print(tail);
+}
