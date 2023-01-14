@@ -1,0 +1,100 @@
+#include <iostream>
+using namespace std;
+class Node {
+public:
+  int data;
+  Node *next;
+  Node *prev;
+  Node(int data) {
+    this->data = data;
+    this->next = NULL;
+    this->prev = NULL;
+  }
+  ~Node() {
+    int value = data;
+    if (next != NULL) {
+      delete next;
+      next = NULL;
+    }
+    cout << "Memory is free for element " << value << endl;
+  }
+};
+void insertNode(Node *&tail, int element, int data) {
+  if (tail == NULL) {
+    Node *newNode = new Node(data);
+    newNode->next = newNode;
+    newNode->prev = newNode->next;
+    tail = newNode;
+  } else {
+    Node *curr = tail;
+
+    while (curr->data != element) {
+      curr = curr->next;
+    }
+    Node *temp = new Node(data);
+    temp->next = curr->next;
+    curr->next->prev = temp;
+    curr->next = temp;
+    temp->prev = curr;
+  }
+}
+void deleteNode(Node *&tail, int val) {
+  if (tail == NULL) {
+    cout << "List is empty cant delete" << endl;
+    return;
+  } else {
+    Node *prev1 = tail;
+    Node *curr = prev1->next;
+    while (curr->data != val) {
+      prev1 = curr;
+      curr = curr->next;
+    }
+    prev1->next = curr->next;
+    if(curr==prev1)
+    {
+      tail=NULL;
+    }
+    if(tail==curr)
+    {
+      tail=prev1;
+    }
+    curr->next->prev = prev1;
+    curr->next = NULL;
+    delete curr;
+  }
+}
+void print(Node *tail) {
+
+  Node *temp = tail;
+
+  // empty list
+  if (tail == NULL) {
+    cout << "List is Empty " << endl;
+    return;
+  }
+
+  do {
+    cout << tail->data << " ";
+    tail = tail->next;
+  } while (tail != temp);
+
+  cout << endl;
+}
+int main() {
+  Node *tail = NULL;
+  // print(tail);
+  insertNode(tail, 5, 3);
+  print(tail);
+  insertNode(tail, 3, 6);
+  print(tail);
+  insertNode(tail, 6, 7);
+  print(tail);
+  insertNode(tail, 7, 8);
+  print(tail);
+  insertNode(tail, 8, 9);
+  print(tail);
+  insertNode(tail, 9, 10);
+  print(tail);
+   deleteNode(tail,8);
+   print(tail);
+}
