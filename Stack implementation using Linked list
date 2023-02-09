@@ -1,0 +1,95 @@
+#include <iostream>
+using namespace std;
+class Node {
+public:
+  int size;
+  int top;
+  int data;
+  Node *next;
+  Node(int size) {
+    this->size = size;
+    this->top = 0;
+    this->data = size;
+    this->next = NULL;
+  }
+
+  ~Node() {
+    int value = this->data;
+    while (this->next != NULL) {
+      delete next;
+      this->next = NULL;
+    }
+    // cout << "Memort is free for value " << value << endl;
+  }
+
+  void push(Node *&head, Node *&tail, int ele) {
+    if (size - top >= 1) {
+      top++;
+      if (tail == NULL) {
+        Node *temp = new Node(ele);
+        // tail->next=temp;
+        tail = temp;
+        head = temp;
+      } else {
+        Node *temp = new Node(ele);
+        tail->next = temp;
+        tail = temp;
+      }
+    } else {
+      cout << "Stack overflow" << endl;
+    }
+  }
+  void pop(Node *&head, Node *&tail) {
+    if (top >= 1) {
+      top--;
+      Node *curr = head;
+      Node *prev = NULL;
+      while (curr != tail && curr->next != NULL) {
+        prev = curr;
+        curr = curr->next;
+      }
+      prev->next = NULL;
+      delete (curr);
+      tail = prev;
+    } else {
+      cout << "Stack underflow" << endl;
+    }
+  }
+  int peek(Node *&tail) {
+    if (top >= 1) {
+      return tail->data;
+    } else {
+      cout << "Stack underflow" << endl;
+      return -1;
+    }
+  }
+  bool empty(Node *&tail) {
+    if (tail == NULL) {
+      return 1;
+    } else {
+      return 0;
+    }
+  }
+};
+int main() {
+  Node *nod = new Node(5);
+  Node *head = nod;
+  Node *tail = nod;
+  nod->push(head, tail, 10);
+  nod->push(head, tail, 20);
+  nod->push(head, tail, 30);
+  nod->push(head, tail, 40);
+  nod->push(head, tail, 50);
+  cout << "Top element= " << nod->peek(tail) << endl;
+  // nod->pop(head,tail);
+  // cout << "Top element= " << nod->peek(tail) << endl;
+  // nod->pop(head,tail);
+  // cout << "Top element= " << nod->peek(tail) << endl;
+  // nod->pop(head,tail);
+  // cout << "Top element= " << nod->peek(tail) << endl;
+  if (nod->empty(tail)) {
+    cout << "Stack is empty" << endl;
+  } else {
+    cout << "Stack is not empty" << endl;
+  }
+}
